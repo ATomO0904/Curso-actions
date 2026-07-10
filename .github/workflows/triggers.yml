@@ -1,6 +1,16 @@
 name: Usando expresiones
 
 on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**.py'
+  issues:
+    types: 
+      - labeled
   workflow_dispatch:
     inputs:
       edad:
@@ -20,6 +30,8 @@ jobs:
     steps:
       - name: correr script
         run: echo ${{inputs.nombre}} es adulto
+      - name: correr python
+        run: python main.py
   menor:
     if: ${{ inputs.edad < 18 }}
     runs-on: ubuntu-latest
